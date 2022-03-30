@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get "/404" => "errors#not_found"
+
   namespace :api do
     namespace :v1 do
       resources :merchants, only: [:index, :show] do
