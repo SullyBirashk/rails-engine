@@ -144,26 +144,16 @@ describe "Item API" do
     item_1 = Item.create!(name: "item 1", description: "soft", unit_price: 21.99, merchant_id: id)
     item_2 = Item.create!(name: "item 2", description: "rubbbery", unit_price: 23.99, merchant_id: id_2)
 
-    patch "/api/v1/items/#{item_2.id}?name=item_5&&description=bumpy&&unit_price=25.99&&merchant_id=#{id}"
+    get "/api/v1/items/#{item_2.id}/merchant"
 
     expect(response).to be_successful
 
-    item = JSON.parse(response.body, symbolize_names: true)
+    merchant = JSON.parse(response.body, symbolize_names: true)
 
-    expect(item[:data]).to have_key(:id)
-    expect(item[:data][:id]).to be_an(String)
+    expect(merchant[:data]).to have_key(:id)
+    expect(merchant[:data][:id]).to be_an(String)
 
-    expect(item[:data][:attributes]).to have_key(:name)
-    expect(item[:data][:attributes][:name]).to be_a(String)
-
-    expect(item[:data][:attributes]).to have_key(:description)
-    expect(item[:data][:attributes][:description]).to be_a(String)
-
-    expect(item[:data][:attributes]).to have_key(:unit_price)
-    expect(item[:data][:attributes][:unit_price]).to be_a(Float)
-
-    expect(item[:data][:attributes]).to have_key(:merchant_id)
-    expect(item[:data][:attributes][:merchant_id]).to be_a(Integer)
+    expect(merchant[:data][:attributes]).to have_key(:name)
+    expect(merchant[:data][:attributes][:name]).to be_a(String)
   end
-
 end
